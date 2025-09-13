@@ -23,50 +23,51 @@ This drastically reduces Mean Time To Resolution (MTTR) while staying modular an
 ⚙️ System Architecture
 
 +-------------------------+
-|   New Incident Input    |
-| (Short + Full Desc)     |
+|  New Incident Input     |
+|  (Short + Full Desc)    |
 +-----------+-------------+
             |
             v
 +-------------------------+
-|  Embed Input (Text)     |
-|  ← SentenceTransformer  |
-|    (all-MiniLM-L6-v2)   |
+| Embed Input (Text)      |
+| → SentenceTransformer   |
+|   (all-MiniLM-L6-v2)    |
 +-----------+-------------+
             |
             v
 +-------------------------+
 | Query Vector DB (FAISS) |
-| → Top K Similar Incidents|
+| → Top-K Similar Incidents|
 +-----------+-------------+
             |
             v
-+-------------------------+
-| (Optional) RCA Classifier|
-| → Predict Root Cause Tag |
-+-----------+-------------+
++-----------------------------+
+| (Optional) RCA Classifier   |
+| → Predict Root Cause Tag    |
++-----------+-----------------+
             |
             v
 +-------------------------------+
-|   Construct LLM Prompt        |
+| Construct LLM Prompt          |
 | (Incident + Context + RCA)    |
 +-----------+-------------------+
             |
             v
 +-------------------------------+
-|    LLM Agent (Local / API)    |
-| Tasks:                        |
-|  ✅ Summarise Incident        |
-|  ✅ Predict Root Cause        |
+|   LLM Agent (Local / API)     |
+|   Tasks:                      |
+|   ✅ Summarise Incident       |
+|   ✅ Predict Root Cause       |
 +-----------+-------------------+
             |
             v
 +-------------------------------+
-|            Output:            |
-|  - Short Summary              |
-|  - Root Cause (Text/Label)    |
-|  - References (Incident IDs)  |
+|           Output              |
+| - Short Summary               |
+| - Root Cause (Text / Label)   |
+| - References (Incident IDs)   |
 +-------------------------------+
+
 
 🎯 Solution Approach
 
